@@ -102,4 +102,54 @@ Again for this it took me 4 refactors to achieve this fully working code.
 (Refer the removeSpecificCharacterInFirstTwoPosition in StringHelper.java 
 to view the code in every step of refactoring)
 
+**ParameterizedTest and CsvSource:**  
+These two annotations are part of junit-jupiter-params dependency. 
+```
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-params</artifactId>
+    <version>${junit.jupiter.version}</version>
+    <scope>test</scope>
+</dependency>
+```
+
+Implemented the above annotations to pass parameters to the test methods. Created
+new PhoneNumberValidator test class to explore these annotations. We can simply 
+remove @Test annotation and we can add @ParameterizedTest and we can pass
+the parameters using the @CsvSource annotation. This will be help us test multiple
+inputs and expected results in a single test method.
+
+```
+@ParameterizedTest
+@CsvSource({
+        "+919041111111, true",
+        "+9190411111111, false",
+        "919041111111, false",
+})
+void itShouldValidatePhoneNumberCase1(String phoneNumber, boolean expected) {
+    //Given
+    //String phoneNumber = "+919041111111"; //commented out because input coming as param
+    //When
+    boolean isValid = phoneNumberValidator.test(phoneNumber);
+    //Then
+    //assertEquals(expected, isValid);//Junit 5
+    assertThat(isValid).isEqualTo(expected); //AssertJ
+}
+```  
+
+In this PhoneNumberValidatorTest implemented Assertions from Assertj api's.
+```
+assertThat(isValid).isEqualTo(expected); //AssertJ
+```
+For that we need to add the below dependency.
+
+```
+<dependency>
+    <groupId>org.assertj</groupId>
+    <artifactId>assertj-core</artifactId>
+    <version>3.16.1</version>
+    <scope>test</scope>
+</dependency>
+```  
+
 ------------------------------------------------------------------------------------
