@@ -137,7 +137,7 @@ void itShouldValidatePhoneNumberCase1(String phoneNumber, boolean expected) {
 }
 ```  
 
-In this PhoneNumberValidatorTest implemented Assertions from Assertj api's.
+In this PhoneNumberValidatorTest we implemented Assertions from Assertj api's.
 ```
 assertThat(isValid).isEqualTo(expected); //AssertJ
 ```
